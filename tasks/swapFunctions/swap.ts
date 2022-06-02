@@ -7,12 +7,12 @@ dotenv.config();
 task("swap", "Sends tokens to the waiting pool")
 .addParam("to", "Recipient of tokens")
 .addParam("amount", "Amount of tokens you want to swap")
+.addParam("blockchain", "Blockchain-recipient of tokens")
 .setAction(async (args, hre) => {
 
     let bridgeAddress: string;
-
     
-    if (args.blockchain == "ETH"){
+    if (args.blockchain == "BSC"){
         bridgeAddress = process.env.ETH_BRIDGE_ADDRESS as string;
     }
     else {
