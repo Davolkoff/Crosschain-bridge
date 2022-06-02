@@ -31,13 +31,13 @@ contract Bridge {
         return message_.toEthSignedMessageHash().recover(signature_);
     }
 
-    // функция отправки токенов
+    // token sending function
     function swap(address recipient_, uint256 amount_) external {
         token20.burn(msg.sender, amount_);
         emit swapInitialized(msg.sender, recipient_, amount_, !blockchain);
     }
 
-    // функция получения токенов
+    // token receipt function
     function redeem(address from_, address to_, uint256 amount_, uint256 nonce_, bytes memory signature_) external {
         require(_nonce[nonce_] == false, "This transaction has already been completed");
         
