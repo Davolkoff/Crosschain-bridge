@@ -8,7 +8,7 @@ task("redeem", "Mints fungible tokens on your account")
 .addParam("from", "Sender of tokens")
 .addParam("to", "Recipient of tokens")
 .addParam("amount", "Amount of tokens you want to swap")
-.addParam("blockchain", "Blockchain-receiver (\"BSC\" or \"ETH\")")
+.addParam("blockchain", "Blockchain-recipient (\"BSC\" or \"ETH\")")
 .addParam("nonce", "Nonce of transaction (it shouldn't be the same as last)")
 .setAction(async (args, hre) => {
 
