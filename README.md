@@ -66,7 +66,7 @@ OPTIONS:
 
 Example:
 
-hardhat swap --to 0x5A31ABa56b11cc0Feae06C7f907bED9Dc1C02f95 --amount 1000000 --blockchain BSC --network rinkeby
+npx hardhat swap --to 0x5A31ABa56b11cc0Feae06C7f907bED9Dc1C02f95 --amount 1000000 --blockchain BSC --network rinkeby
 ```
 
 #### <a name="Redeem"></a> <b>- Redeem</b> (after executing this command your tokens will be transferred from one blockchain to another):</b>
@@ -84,7 +84,7 @@ OPTIONS:
 
 Example:
 
-hardhat swap --from 0x5A31ABa56b11cc0Feae06C7f907bED9Dc1C02f95 --to 0x5A31ABa56b11cc0Feae06C7f907bED9Dc1C02f95 --amount 1000000 --blockchain BSC --nonce 0 --network bsctest
+npx hardhat redeem --from 0x5A31ABa56b11cc0Feae06C7f907bED9Dc1C02f95 --to 0x5A31ABa56b11cc0Feae06C7f907bED9Dc1C02f95 --amount 1000000 --blockchain BSC --nonce 0 --network bsctest
 ```
 >This function has so many parameters, since they are needed to sign the transaction. In real cross-chain bridges, all these parameters are entered by the server automatically.
 -------------------------
@@ -102,11 +102,9 @@ OPTIONS:
   --blockchain  Blockchain-receiver ("BSC" or "ETH") 
   --to          Receiver of tokens 
 
-mint: Mints fungible tokens on selected account
-
 
 Example:
 
-hardhat mint --to 0x5A31ABa56b11cc0Feae06C7f907bED9Dc1C02f95 --amount 10000000000000000 --blockchain BSC --network bsctest
+npx hardhat mint --to 0x5A31ABa56b11cc0Feae06C7f907bED9Dc1C02f95 --amount 10000000000000000 --blockchain BSC --network bsctest
 
 ```
