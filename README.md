@@ -36,7 +36,7 @@ npx hardhat run scripts/Bridges/deployBridgeETH.ts --network rinkeby
 
 #### <a name="BR-bsc"></a> <b>- Deploy bridge to BSC Testnet</b> (after executing this command you'll see bridge's address in terminal, address will be added to .env file):
 ```shell
-npx hardhat run scripts/Bridges/deployBridgeETH.ts --network bsctest
+npx hardhat run scripts/Bridges/deployBridgeBSC.ts --network bsctest
 ```
 
 #### <a name="Connect-erc"></a> <b>- Connect ERC20 to bridge:</b>
