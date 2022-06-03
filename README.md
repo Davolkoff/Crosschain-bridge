@@ -46,7 +46,7 @@ npx hardhat connect --blockchain ETH --network rinkeby
 
 #### <a name="Connect-bep"></a> <b>- Connect BEP20 to bridge:</b>
 ```shell
-npx hardhat connect --blockchain ETH --network bsctest
+npx hardhat connect --blockchain BSC --network bsctest
 ```
 
 -------------------------
