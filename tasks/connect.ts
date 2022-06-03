@@ -4,13 +4,12 @@ import * as dotenv from "dotenv";
 dotenv.config();
 
 task("connect", "Connect fungible token's contract to bridge")
-.addParam("blockchain", "0 - ETH, 1 - BSC")
 .setAction(async (args, hre) => {
     
     let tokenAddress: string;
     let bridgeAddress: string;
 
-    if (args.blockchain == "0"){
+    if (hre.network.name == "rinkeby"){
         tokenAddress = process.env.ERC20_ADDRESS as string;
         bridgeAddress = process.env.ETH_BRIDGE_ADDRESS as string;
     }

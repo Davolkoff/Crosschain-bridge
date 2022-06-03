@@ -1,46 +1,107 @@
-# Advanced Sample Hardhat Project
+# Сrosschain bridge
 
-This project demonstrates an advanced Hardhat use case, integrating other tools commonly used alongside Hardhat in the ecosystem.
+>This project contains a universal bridge for Binance Smart Chain and Ethereum blockchains and a fungible token that meets the ERC-20 and BEP-20 standards. There are also scripts for deploying tokens and bridges in the Rinkeby and Binance smart chain testnet networks and for connecting tokens to bridges.
+-------------------------
+# Table of contents
+1. <b>Deploying</b>
+  + [Deploy ERC20 token](#Deploy-erc20)
+  + [Deploy BEP20 token](#Deploy-bep20)
+  + [Deploy bridge to Rinkeby](#BR-rinkeby)
+  + [Deploy bridge to BSC Testnet](#BR-bsc)
+  + [Connect ERC20 to bridge](#Connect-erc)
+  + [Connect BEP20 to bridge](#Connect-bep)
+2. <b>Swap functions</b>
+  + [Swap](#Swap)
+  + [Redeem](#Redeem)
+3. <b>Other functions</b>
+  + [Mint tokens](#Mint)
 
-The project comes with a sample contract, a test for that contract, a sample script that deploys that contract, and an example of a task implementation, which simply lists the available accounts. It also comes with a variety of other tools, preconfigured to work with the project code.
+-------------------------
+## 1. Deploying
 
-Try running some of the following tasks:
-
+#### <a name="Deploy-erc20"></a> <b>- Deploy ERC20 token</b> (after executing this command you'll see ERC20 token's address in terminal, address will be added to .env file): 
 ```shell
-npx hardhat accounts
-npx hardhat compile
-npx hardhat clean
-npx hardhat test
-npx hardhat node
-npx hardhat help
-REPORT_GAS=true npx hardhat test
-npx hardhat coverage
-npx hardhat run scripts/deploy.ts
-TS_NODE_FILES=true npx ts-node scripts/deploy.ts
-npx eslint '**/*.{js,ts}'
-npx eslint '**/*.{js,ts}' --fix
-npx prettier '**/*.{json,sol,md}' --check
-npx prettier '**/*.{json,sol,md}' --write
-npx solhint 'contracts/**/*.sol'
-npx solhint 'contracts/**/*.sol' --fix
+npx hardhat run scripts/Tokens/deployERC20.ts --network rinkeby
 ```
 
-# Etherscan verification
-
-To try out Etherscan verification, you first need to deploy a contract to an Ethereum network that's supported by Etherscan, such as Ropsten.
-
-In this project, copy the .env.example file to a file named .env, and then edit it to fill in the details. Enter your Etherscan API key, your Ropsten node URL (eg from Alchemy), and the private key of the account which will send the deployment transaction. With a valid .env file in place, first deploy your contract:
-
+#### <a name="Deploy-bep20"></a> <b>- Deploy BEP20 token</b> (after executing this command you'll see ERC20 token's address in terminal, address will be added to .env file):
 ```shell
-hardhat run --network ropsten scripts/deploy.ts
+npx hardhat run scripts/Tokens/deployBEP20.ts --network bsctest
 ```
 
-Then, copy the deployment address and paste it in to replace `DEPLOYED_CONTRACT_ADDRESS` in this command:
-
+#### <a name="BR-rinkeby"></a> <b>- Deploy bridge to Rinkeby</b> (after executing this command you'll see bridge's address in terminal, address will be added to .env file): 
 ```shell
-npx hardhat verify --network ropsten DEPLOYED_CONTRACT_ADDRESS "Hello, Hardhat!"
+npx hardhat run scripts/Bridges/deployBridgeETH.ts --network rinkeby
 ```
 
-# Performance optimizations
+#### <a name="BR-bsc"></a> <b>- Deploy bridge to BSC Testnet</b> (after executing this command you'll see bridge's address in terminal, address will be added to .env file):
+```shell
+npx hardhat run scripts/Bridges/deployBridgeBSC.ts --network bsctest
+```
 
-For faster runs of your tests and scripts, consider skipping ts-node's type checking by setting the environment variable `TS_NODE_TRANSPILE_ONLY` to `1` in hardhat's environment. For more details see [the documentation](https://hardhat.org/guides/typescript.html#performance-optimizations).
+#### <a name="Connect-erc"></a> <b>- Connect ERC20 to bridge:</b>
+```shell
+npx hardhat connect --network rinkeby
+```
+
+#### <a name="Connect-bep"></a> <b>- Connect BEP20 to bridge:</b>
+```shell
+npx hardhat connect --network bsctest
+```
+
+-------------------------
+
+## 2. Swap functions
+>In real crosschain bridges, these functions are built into the backend, but here they are implemented as tasks
+#### <a name="Swap"></a> <b>- Swap </b>(this function sends your tokens to account on another blockchain. You should accept this transfer by task "redeem"):
+```shell
+Usage: hardhat [GLOBAL OPTIONS] swap --amount <STRING> --to <STRING>
+
+OPTIONS:
+
+  --amount      Amount of tokens you want to swap 
+  --to          Recipient of tokens 
+
+
+Example:
+
+npx hardhat swap --to 0x5A31ABa56b11cc0Feae06C7f907bED9Dc1C02f95 --amount 1000000 --network rinkeby
+```
+
+#### <a name="Redeem"></a> <b>- Redeem</b> (after executing this command your tokens will be transferred from one blockchain to another):</b>
+```shell
+Usage: hardhat [GLOBAL OPTIONS] redeem --amount <STRING> --from <STRING> --nonce <STRING> --to <STRING>
+
+OPTIONS:
+
+  --amount      Amount of tokens you want to swap 
+  --from        Sender of tokens 
+  --nonce       Nonce of transaction (it should not be the same as last) 
+  --to          Recipient of tokens
+
+
+Example:
+
+npx hardhat redeem --from 0x5A31ABa56b11cc0Feae06C7f907bED9Dc1C02f95 --to 0x5A31ABa56b11cc0Feae06C7f907bED9Dc1C02f95 --amount 1000000 --nonce 0 --network bsctest
+```
+>This function has so many parameters, since they are needed to sign the transaction. In real cross-chain bridges, all these parameters are entered by the server automatically.
+-------------------------
+
+## 3. Other functions
+
+#### <a name="Mint"></a> <b>- Mint</b> (mints tokens to selected account):
+
+```shell
+Usage: hardhat [GLOBAL OPTIONS] mint --amount <STRING> --to <STRING>
+
+OPTIONS:
+
+  --amount      Amount of BEP20 tokens 
+  --to          Receiver of tokens 
+
+
+Example:
+
+npx hardhat mint --to 0x5A31ABa56b11cc0Feae06C7f907bED9Dc1C02f95 --amount 10000000000000000 --network bsctest
+
+```

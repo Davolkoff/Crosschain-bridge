@@ -10,9 +10,8 @@ task("swap", "Sends tokens to the waiting pool")
 .setAction(async (args, hre) => {
 
     let bridgeAddress: string;
-
     
-    if (args.blockchain == "ETH"){
+    if (hre.network.name == "rinkeby"){
         bridgeAddress = process.env.ETH_BRIDGE_ADDRESS as string;
     }
     else {
@@ -21,7 +20,7 @@ task("swap", "Sends tokens to the waiting pool")
     
     const bridge = await hre.ethers.getContractAt("Bridge", bridgeAddress);
 
-    await bridge.swap(args.to, args.amount)
+    await bridge.swap(args.to, args.amount);
 
     console.log("Tokens have been successfully sent to the waiting pool");
 });

@@ -68,8 +68,10 @@ describe("Bridge functions", function () {
             [addrETH.address, addrBSC.address, 1000000, 0, true]); 
 
             let signature = await app.signMessage(await ethers.utils.arrayify(msg));
+            
+            let sig = await ethers.utils.splitSignature(signature)
 
-            await bridgeBSC.redeem(addrETH.address, addrBSC.address, 1000000, 0, signature);
+            await bridgeBSC.redeem(addrETH.address, addrBSC.address, 1000000, 0, sig.v, sig.r, sig.s);
             expect(await BEP20.balanceOf(addrBSC.address)).to.equal("1000000");
         });
     });
@@ -81,8 +83,9 @@ describe("Bridge functions", function () {
             [addrETH.address, addrBSC.address, 1000000, 0, true]); 
     
             let signature = await app.signMessage(await ethers.utils.arrayify(msg));
-    
-            await expect(bridgeBSC.redeem(addrETH.address, addrBSC.address, 1000000, 0, signature)).to.be
+            let sig = await ethers.utils.splitSignature(signature);
+
+            await expect(bridgeBSC.redeem(addrETH.address, addrBSC.address, 1000000, 0, sig.v, sig.r, sig.s)).to.be
             .revertedWith("This transaction has already been completed");
         });
 
@@ -92,8 +95,9 @@ describe("Bridge functions", function () {
             [addrETH.address, addrBSC.address, 1000000, 0, true]); 
         
             let signature = await addrBSC.signMessage(await ethers.utils.arrayify(msg));
-        
-            await expect(bridgeBSC.redeem(addrETH.address, addrBSC.address, 1000000, 1, signature)).to.be
+            let sig = await ethers.utils.splitSignature(signature);
+
+            await expect(bridgeBSC.redeem(addrETH.address, addrBSC.address, 1000000, 1, sig.v, sig.r, sig.s)).to.be
             .revertedWith("Incorrect signer");
         });
     });
