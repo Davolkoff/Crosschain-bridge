@@ -41,12 +41,12 @@ npx hardhat run scripts/Bridges/deployBridgeBSC.ts --network bsctest
 
 #### <a name="Connect-erc"></a> <b>- Connect ERC20 to bridge:</b>
 ```shell
-npx hardhat connect --network rinkeby
+npx hardhat connect --blockchain ETH --network rinkeby
 ```
 
 #### <a name="Connect-bep"></a> <b>- Connect BEP20 to bridge:</b>
 ```shell
-npx hardhat connect --network bsctest
+npx hardhat connect --blockchain BSC --network bsctest
 ```
 
 -------------------------
@@ -55,26 +55,28 @@ npx hardhat connect --network bsctest
 >In real crosschain bridges, these functions are built into the backend, but here they are implemented as tasks
 #### <a name="Swap"></a> <b>- Swap </b>(this function sends your tokens to account on another blockchain. You should accept this transfer by task "redeem"):
 ```shell
-Usage: hardhat [GLOBAL OPTIONS] swap --amount <STRING> --to <STRING>
+Usage: hardhat [GLOBAL OPTIONS] swap --amount <STRING> --blockchain <STRING> --to <STRING>
 
 OPTIONS:
 
   --amount      Amount of tokens you want to swap 
+  --blockchain  Blockchain-recipient of tokens 
   --to          Recipient of tokens 
 
 
 Example:
 
-npx hardhat swap --to 0x5A31ABa56b11cc0Feae06C7f907bED9Dc1C02f95 --amount 1000000 --network rinkeby
+npx hardhat swap --to 0x5A31ABa56b11cc0Feae06C7f907bED9Dc1C02f95 --amount 1000000 --blockchain BSC --network rinkeby
 ```
 
 #### <a name="Redeem"></a> <b>- Redeem</b> (after executing this command your tokens will be transferred from one blockchain to another):</b>
 ```shell
-Usage: hardhat [GLOBAL OPTIONS] redeem --amount <STRING> --from <STRING> --nonce <STRING> --to <STRING>
+Usage: hardhat [GLOBAL OPTIONS] redeem --amount <STRING> --blockchain <STRING> --from <STRING> --nonce <STRING> --to <STRING>
 
 OPTIONS:
 
   --amount      Amount of tokens you want to swap 
+  --blockchain  Blockchain-receiver ("BSC" or "ETH") 
   --from        Sender of tokens 
   --nonce       Nonce of transaction (it should not be the same as last) 
   --to          Recipient of tokens
@@ -82,7 +84,7 @@ OPTIONS:
 
 Example:
 
-npx hardhat redeem --from 0x5A31ABa56b11cc0Feae06C7f907bED9Dc1C02f95 --to 0x5A31ABa56b11cc0Feae06C7f907bED9Dc1C02f95 --amount 1000000 --nonce 0 --network bsctest
+npx hardhat redeem --from 0x5A31ABa56b11cc0Feae06C7f907bED9Dc1C02f95 --to 0x5A31ABa56b11cc0Feae06C7f907bED9Dc1C02f95 --amount 1000000 --blockchain BSC --nonce 0 --network bsctest
 ```
 >This function has so many parameters, since they are needed to sign the transaction. In real cross-chain bridges, all these parameters are entered by the server automatically.
 -------------------------
@@ -92,16 +94,17 @@ npx hardhat redeem --from 0x5A31ABa56b11cc0Feae06C7f907bED9Dc1C02f95 --to 0x5A31
 #### <a name="Mint"></a> <b>- Mint</b> (mints tokens to selected account):
 
 ```shell
-Usage: hardhat [GLOBAL OPTIONS] mint --amount <STRING> --to <STRING>
+Usage: hardhat [GLOBAL OPTIONS] mint --amount <STRING> --blockchain <STRING> --to <STRING>
 
 OPTIONS:
 
   --amount      Amount of BEP20 tokens 
+  --blockchain  Blockchain-receiver ("BSC" or "ETH") 
   --to          Receiver of tokens 
 
 
 Example:
 
-npx hardhat mint --to 0x5A31ABa56b11cc0Feae06C7f907bED9Dc1C02f95 --amount 10000000000000000 --network bsctest
+npx hardhat mint --to 0x5A31ABa56b11cc0Feae06C7f907bED9Dc1C02f95 --amount 10000000000000000 --blockchain BSC --network bsctest
 
 ```
