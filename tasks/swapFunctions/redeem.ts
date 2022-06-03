@@ -8,7 +8,7 @@ task("redeem", "Mints fungible tokens on your account")
 .addParam("from", "Sender of tokens")
 .addParam("to", "Recipient of tokens")
 .addParam("amount", "Amount of tokens you want to swap")
-.addParam("blockchain", "Blockchain-recipient (\"BSC\" or \"ETH\")")
+.addParam("blockchain", "Blockchain-receiver (\"BSC\" or \"ETH\")")
 .addParam("nonce", "Nonce of transaction (it shouldn't be the same as last)")
 .setAction(async (args, hre) => {
 
@@ -35,8 +35,9 @@ task("redeem", "Mints fungible tokens on your account")
         [args.from, args.to, args.amount, args.nonce, blockchain]); 
 
     let signature = await app.signMessage(await hre.ethers.utils.arrayify(msg)); // "backend" signs message
+    let sig = await hre.ethers.utils.splitSignature(signature);
 
-    await bridge.redeem(args.from, args.to, args.amount, args.nonce, signature); // "backend" sends message to blockchain
+    await bridge.redeem(args.from, args.to, args.amount, args.nonce, sig.v, sig.r, sig.s); // "backend" sends message to blockchain
 
     console.log("Tokens successfully transferred");
 });
