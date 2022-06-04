@@ -4,7 +4,7 @@ import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 
 dotenv.config();
 
-task("redeem", "Mints fungible tokens on your account")
+task("redeem", "Сompletes the transaction")
 .addParam("to", "Recipient of tokens")
 .addParam("amount", "Amount of tokens you want to swap")
 .addParam("nonce", "Nonce of transaction (it shouldn't be the same as last)")
