@@ -70,12 +70,11 @@ npx hardhat swap --to 0x5A31ABa56b11cc0Feae06C7f907bED9Dc1C02f95 --amount 100000
 
 #### <a name="Redeem"></a> <b>- Redeem</b> (after executing this command your tokens will be transferred from one blockchain to another):</b>
 ```shell
-Usage: hardhat [GLOBAL OPTIONS] redeem --amount <STRING> --from <STRING> --nonce <STRING> --to <STRING>
+Usage: hardhat [GLOBAL OPTIONS] redeem --to <STRING> --amount <STRING> --nonce <STRING>
 
 OPTIONS:
 
   --amount      Amount of tokens you want to swap 
-  --from        Sender of tokens 
   --nonce       Nonce of transaction (it should not be the same as last) 
   --to          Recipient of tokens
 
