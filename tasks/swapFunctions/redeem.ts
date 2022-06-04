@@ -5,7 +5,6 @@ import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 dotenv.config();
 
 task("redeem", "Mints fungible tokens on your account")
-.addParam("from", "Sender of tokens")
 .addParam("to", "Recipient of tokens")
 .addParam("amount", "Amount of tokens you want to swap")
 .addParam("nonce", "Nonce of transaction (it shouldn't be the same as last)")
@@ -31,12 +30,12 @@ task("redeem", "Mints fungible tokens on your account")
 
     const msg = await hre.ethers.utils.solidityKeccak256( // "backend" forms message
         ["address", "address", "uint256", "uint256", "bool"], 
-        [args.from, args.to, args.amount, args.nonce, blockchain]); 
+        [sender.address, args.to, args.amount, args.nonce, blockchain]); 
 
     let signature = await app.signMessage(await hre.ethers.utils.arrayify(msg)); // "backend" signs message
     let sig = await hre.ethers.utils.splitSignature(signature);
 
-    await bridge.redeem(args.from, args.to, args.amount, args.nonce, sig.v, sig.r, sig.s); // "backend" sends message to blockchain
+    await bridge.redeem(sender.address, args.to, args.amount, args.nonce, sig.v, sig.r, sig.s); // "backend" sends message to blockchain
 
     console.log("Tokens successfully transferred");
 });
