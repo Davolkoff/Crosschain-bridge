@@ -3,13 +3,13 @@ import * as dotenv from "dotenv";
 
 dotenv.config();
 
-task("mint", "Mints fungible tokens on selected account")
+task("connectbr", "Connect fungible token's contract to bridge")
+.addParam("braddr", "Bridge address")
 .addParam("taddr", "Token address")
-.addParam("to", "Receiver of tokens")
-.addParam("amount", "Amount of tokens")
 .setAction(async (args, hre) => {
 
     const token = await hre.ethers.getContractAt("Token20", args.taddr);
-    await token.mint(args.to, args.amount);
-    console.log("Tokens successfully minted");
+    await token.connectBridge(args.braddr);
+
+    console.log("Bridge successfully connected");
 });

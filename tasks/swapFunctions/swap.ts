@@ -7,20 +7,14 @@ dotenv.config();
 task("swap", "Sends tokens to the waiting pool")
 .addParam("to", "Recipient of tokens")
 .addParam("amount", "Amount of tokens you want to swap")
+.addParam("braddr", "Bridge address")
+.addParam("taddr", "Token address")
+.addParam("bchain", "Blockchain recipient")
 .setAction(async (args, hre) => {
-
-    let bridgeAddress: string;
     
-    if (hre.network.name == "rinkeby"){
-        bridgeAddress = process.env.ETH_BRIDGE_ADDRESS as string;
-    }
-    else {
-        bridgeAddress = process.env.BSC_BRIDGE_ADDRESS as string;
-    }
-    
-    const bridge = await hre.ethers.getContractAt("Bridge", bridgeAddress);
+    const bridge = await hre.ethers.getContractAt("Bridge", args.braddr);
 
-    await bridge.swap(args.to, args.amount);
+    await bridge.swap(args.taddr, args.to, args.amount, args.bchain);
 
     console.log("Tokens have been successfully sent to the waiting pool");
 });

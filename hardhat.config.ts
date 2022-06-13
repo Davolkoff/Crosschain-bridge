@@ -23,7 +23,7 @@ export default {
     cache: "./cache",
     artifacts: "./artifacts"
   },
-  defaultNetwork: "bsctest",
+  defaultNetwork: "localhost",
   networks: {
     rinkeby:{
       url: `https://eth-rinkeby.alchemyapi.io/v2/${process.env.ALCHEMY_KEY}`,
@@ -33,7 +33,13 @@ export default {
       url: "https://data-seed-prebsc-1-s1.binance.org:8545",
       chainId: 97,
       accounts: [process.env.PRIVATE_KEY, process.env.OFFCHAIN_PRIVATE_KEY]
-    }
+    },
+    hardhat: {
+      forking: {
+        url: `https://eth-rinkeby.alchemyapi.io/v2/${process.env.ALCHEMY_KEY}`,
+        blockNumber: 10700900
+      }
+    },
   },
   etherscan: {
     apiKey: process.env.ETHERSCAN_API

@@ -1,5 +1,4 @@
 import { ethers } from "hardhat";
-import * as fs from 'fs'
 
 async function main() {
   const Token20 = await ethers.getContractFactory("Token20");
@@ -7,9 +6,7 @@ async function main() {
 
   await token20.deployed();
 
-  console.log("ERC20 contract address:", token20.address);
-
-  fs.appendFileSync('.env', `\nERC20_ADDRESS=${token20.address}`);
+  console.log("Token20 address:", token20.address);
 }
 
 main()

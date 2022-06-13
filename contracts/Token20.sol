@@ -13,7 +13,7 @@ contract Token20 {
     uint8 public decimals; // number of decimals
     address private _owner; // address of an owner
     address private _bridge; // address of a bridge
-    bool bridgeConnected; // is bridge connected or not
+    bool private bridgeConnected; // is bridge connected or not
 
     modifier requireBridgeOrOwner {
         require(msg.sender == _owner || msg.sender == _bridge, "Not a bridge or an owner");
